@@ -17,7 +17,7 @@ class BasicAuthMiddleware implements MiddlewareInterface
     public function __construct(Config $config)
     {
         $this->username = $config->get('BASIC_AUTH_USER', 'gardena');
-        $this->password = $config->get('BASIC_AUTH_PASS', 'proxy');
+        $this->password = $config->get('BASIC_AUTH_PASSWORD', 'proxy');
         $this->excludedRoutes = explode(',', $config->get('BASIC_AUTH_EXCLUDE'));
     }
 
