@@ -38,6 +38,9 @@
             "composer install --no-dev --optimize-autoloader",
             "php -d phar.readonly=0 tools/build.php",
             "composer install"
+        ],
+        "rebuild": [
+            "php -d phar.readonly=0 tools/build.php"
         ]
     },
     "minimum-stability": "stable",

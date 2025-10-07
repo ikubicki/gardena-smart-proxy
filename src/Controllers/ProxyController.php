@@ -2,6 +2,7 @@
 
 namespace GardenaProxy\Controllers;
 
+use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -58,6 +59,9 @@ class ProxyController extends AbstractController
     public function createWebhook(Request $request, Response $response): Response
     {
         $body = $request->getParsedBody();
+        if (!$body) {
+            throw new Exception('Invalid payload');
+        }
         $apiResponse = $this->guzzle()->post("/v2/webhook", [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->authenticate(),
@@ -98,6 +102,10 @@ class ProxyController extends AbstractController
 
     protected function authenticate(): string
     {
+        if ($this->accessToken) {
+            return $this->accessToken;
+        }
+        $this->accessToken = $this->db()->getCache('access_token', '');
         if (!$this->accessToken) {
             $authUrl = $this->config->get('GARDENA_AUTH_URL', 'https://api.authentication.husqvarnagroup.dev/v1/oauth2/token');
             $response = $this->guzzle()->post($authUrl, [
@@ -110,6 +118,7 @@ class ProxyController extends AbstractController
             $data = json_decode((string)$response->getBody(), true);
             if (isset($data['access_token'])) {
                 $this->accessToken = $data['access_token'];
+                $this->db()->setCache('access_token', $this->accessToken, 21600); // cache for 6 hours
             } else {
                 throw new \Exception('Failed to authenticate with Gardena API');
             }
