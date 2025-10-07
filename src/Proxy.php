@@ -3,7 +3,7 @@
 namespace GardenaProxy;
 
 use Slim\App as SlimApp;
-use GardenaProxy\Controllers\GardenaController;
+use GardenaProxy\Controllers\CallbacksController;
 use GardenaProxy\Controllers\IndexController;
 use GardenaProxy\Controllers\ProxyController;
 use GardenaProxy\Middleware\BasicAuthMiddleware;
@@ -70,7 +70,7 @@ class Proxy
     {
 
         $indexController = new IndexController($this->config);
-        $gardenaController = new GardenaController($this->config);
+        $callbacksController = new CallbacksController($this->config);
         $proxyController = new ProxyController($this->config);
 
         // Routes
@@ -81,8 +81,8 @@ class Proxy
         });
 
         // Callbacks endpoints
-        $this->app->post('/callbacks', [$gardenaController, 'postCallbacks']);
-        $this->app->get('/devices', [$gardenaController, 'getDevices']);
+        $this->app->post('/callbacks', [$callbacksController, 'postCallbacks']);
+        $this->app->get('/devices', [$callbacksController, 'getDevices']);
 
         // Proxy endpoints
         $this->app->get('/proxy/locations', [$proxyController, 'getLocations']);

@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use stdClass;
 
-class GardenaController extends AbstractController
+class CallbacksController extends AbstractController
 {
 
     public function getDevices(Request $request, Response $response): Response
