@@ -22,13 +22,13 @@
             "echo 'Server running at http://localhost:8080'"
         ],
         "docker:run:dist": [
-            "docker run -d -p 8081:8081 -v $(pwd)/dist:/app -w /app --name gardena-proxy-dist-container php:8.4-cli php -S 0.0.0.0:8081",
-            "echo 'PHAR application running at http://localhost:8081'"
+            "docker run -d -p 8086:8086 -v $(pwd)/dist:/app -w /app --name gardena-proxy-dist-container php:8.4-cli php -S 0.0.0.0:8086",
+            "echo 'PHAR application running at http://localhost:8086'"
         ],
         "docker:stop": [
             "docker stop gardena-proxy-container",
-            "docker stop gardena-proxy-dist-container",
             "docker rm gardena-proxy-container",
+            "docker stop gardena-proxy-dist-container",
             "docker rm gardena-proxy-dist-container"
         ],
         "docker:logs": [

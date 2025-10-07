@@ -1,4 +1,4 @@
-vendor
-dist
-data
-public/config.php
+/vendor
+/dist
+/data
+/public/config.php

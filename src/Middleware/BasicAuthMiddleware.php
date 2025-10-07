@@ -23,7 +23,7 @@ class BasicAuthMiddleware implements MiddlewareInterface
 
     public function process(Request $request, RequestHandler $handler): Response
     {
-        $path = $request->getUri()->getPath();
+        $path = $request->getRequestTarget();
         if (in_array($path, $this->excludedRoutes)) {
             return $handler->handle($request);
         }
