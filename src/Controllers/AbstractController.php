@@ -38,6 +38,7 @@ abstract class AbstractController
         return [
             'base_uri' => $this->config->get('GARDENA_API_URL'),
             'timeout'  => $this->config->get('GARDENA_API_TIMEOUT', 5),
+            'http_errors' => false,
         ];
     }
 }

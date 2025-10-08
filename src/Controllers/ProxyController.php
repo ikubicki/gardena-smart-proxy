@@ -81,7 +81,6 @@ class ProxyController extends AbstractController
     {
         $deviceId = urlencode($args['deviceId']);
         $body = $request->getParsedBody();
-        error_log("Sending command to device {$deviceId}: " . json_encode($body));
         $apiResponse = $this->guzzle()->put("/v2/command/{$deviceId}", [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->authenticate(),
@@ -90,7 +89,6 @@ class ProxyController extends AbstractController
             ],
             'json' => $body,
         ]);
-        error_log((string)$apiResponse->getBody());
         $data = json_decode((string) $apiResponse->getBody(), true);
         $response->getBody()->write(json_encode($data));
         return $response
